@@ -57,7 +57,7 @@ public class Kiosk {
                 System.out.println("프로그램을 종료합니다.");
                 running = false; // 프로그램 종료
             } else if (categoryChoice >0 && categoryChoice <= menus.size()) {
-                // lv4->lv5 리팩토링 : 서브메뉴 캡슐화
+                // lv4->lv5 리팩토링 : 서브메뉴 출력 로직을 메서드로 분리
                 displayMenuItems(menus.get(categoryChoice-1)); // 입력 받은 카테고리 출력!
             } else {
                 System.out.println("올바른 번호를 입력하세요");
@@ -66,7 +66,7 @@ public class Kiosk {
         scanner.close();
     }
 
-    // 서브메뉴 캡슐화
+    // 서브메뉴 출력 메서드 분리하고 private 설정하여 캡슐화
     private void displayMenuItems(Menu menu) {
         Scanner scanner = new Scanner(System.in);
         boolean subMenu = true;
