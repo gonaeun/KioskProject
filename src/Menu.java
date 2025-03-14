@@ -33,5 +33,10 @@ public class Menu {
         return menuItems;
     }
 
+    // Setter 메서드 : 카테고리명 변경
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
 
 }

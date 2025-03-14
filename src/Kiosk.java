@@ -3,8 +3,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    private List<Menu> menus; // 리스트 선언
+    private final List<Menu> menus; // 리스트 선언 및 초기화
     // lv3->lv4 리팩토링 : List<MenuItem>을 List<Menu>로 수정하여 카테고리별 메뉴를 저장할 리스트 선언
+    // lv4->lv5 리팩토링 : final을 추가하여 캡슐화 강화 (리스트 자체 변경 방지)
 
     public Kiosk() {  // Kiosk() 생성자
         menus = new ArrayList<>(); // 리스트 초기화 (초기화 하기 전에는 null, 초기화 한 후에는 [] 빈 리스트)
@@ -56,36 +57,40 @@ public class Kiosk {
                 System.out.println("프로그램을 종료합니다.");
                 running = false; // 프로그램 종료
             } else if (categoryChoice >0 && categoryChoice <= menus.size()) {
-                // 입력받은 카테고리 출력!
-                Menu selectedMenu = menus.get(categoryChoice -1); // 입력받은 순서의 객체를 메뉴에서 가져와서 출력해주자
-
-                // 서브메뉴 루프도 추가해주자!
-                boolean subMenu = true;
-                while (subMenu) {
-                    System.out.println("\n[ " + selectedMenu + " MENU ]");
-
-                    // 해당 메뉴 아이템 출력
-                    List<MenuItem> items = selectedMenu.getMenuItems();  // Menu 클래스의 getMenuItems()메서드 이용
-                    for (int i = 0; i < items.size(); i++) {
-                        MenuItem item = items.get(i);
-                        System.out.println((i+1) + ". " + item.getName() + " | W " + item.getPrice() + " | " + item.getDescription());
-                    }
-                    System.out.println("0. 뒤로가기");
-
-                    // 서브 메뉴 입력받기
-                    int subMenuChoice = scanner.nextInt();
-                    if (subMenuChoice == 0) {
-                        subMenu = false; // 뒤로가기 선택시(0입력) 서브메뉴 종료되도록
-                    } else if (subMenuChoice >0 && subMenuChoice <= items.size()) {
-                        System.out.println("선택한 메뉴 : " + items.get(subMenuChoice-1).getName() + " | W " + items.get(subMenuChoice-1).getPrice() + " | " + items.get(subMenuChoice-1).getDescription());
-                    } else {
-                        System.out.println("올바른 번호를 입력하세요");
-                    }
-                }
+                // lv4->lv5 리팩토링 : 서브메뉴 캡슐화
+                displayMenuItems(menus.get(categoryChoice-1)); // 입력 받은 카테고리 출력!
             } else {
                 System.out.println("올바른 번호를 입력하세요");
             }
         }
         scanner.close();
+    }
+
+    // 서브메뉴 캡슐화
+    private void displayMenuItems(Menu menu) {
+        Scanner scanner = new Scanner(System.in);
+        boolean subMenu = true;
+
+        while (subMenu) {
+            System.out.println("\n[ " + menu.getCategory() + " MENU ]");
+
+            // 해당 메뉴 아이템 출력
+            List<MenuItem> items = menu.getMenuItems();  // Menu 클래스의 getMenuItems()메서드 이용
+            for (int i = 0; i < items.size(); i++) {
+                MenuItem item = items.get(i);
+                System.out.println((i + 1) + ". " + item.getName() + " | W " + item.getPrice() + " | " + item.getDescription());
+            }
+            System.out.println("0. 뒤로가기");
+
+            // 서브 메뉴 입력받기
+            int subMenuChoice = scanner.nextInt();
+            if (subMenuChoice == 0) {
+                subMenu = false; // 뒤로가기 선택시(0입력) 서브메뉴 종료되도록
+            } else if (subMenuChoice > 0 && subMenuChoice <= items.size()) {
+                System.out.println("선택한 메뉴 : " + items.get(subMenuChoice - 1).getName() + " | W " + items.get(subMenuChoice - 1).getPrice() + " | " + items.get(subMenuChoice - 1).getDescription());
+            } else {
+                System.out.println("올바른 번호를 입력하세요");
+            }
+        }
     }
 }
