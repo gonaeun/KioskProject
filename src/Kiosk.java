@@ -76,7 +76,7 @@ public class Kiosk {
                     int subMenuChoice = scanner.nextInt();
                     if (subMenuChoice == 0) {
                         subMenu = false; // 뒤로가기 선택시(0입력) 서브메뉴 종료되도록
-                    } else if (subMenuChoice >0 && subMenuChoice <= menus.size()) {
+                    } else if (subMenuChoice >0 && subMenuChoice <= items.size()) {
                         System.out.println("선택한 메뉴 : " + items.get(subMenuChoice-1).getName() + " | W " + items.get(subMenuChoice-1).getPrice() + " | " + items.get(subMenuChoice-1).getDescription());
                     } else {
                         System.out.println("올바른 번호를 입력하세요");
