@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Kiosk {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;  // 실행시 햄버거 메뉴가 표시될 수 있도록
