@@ -51,7 +51,16 @@ public class Kiosk {
             }
             System.out.println("0. 종료");
 
-            int categoryChoice = scanner.nextInt(); // 숫자 입력 받아서 카테고리 선택
+            int categoryChoice = -1;
+            // categoryChoice변수를 if문에서도 사용하려면 try블럭 바깥에서 선언해야 하기 때문에, 일단 여기서 선언하면서 -1값으로 초기값 설정
+
+            try {
+                categoryChoice = scanner.nextInt(); // 숫자 입력 받아서 카테고리 선택
+            } catch (Exception e) {
+                System.out.println("숫자를 입력하세요");
+                scanner.nextLine(); // 개행 >> 잘못된 입력 제거
+                continue; // 다시 입력하도록 반복문 처음으로 이동
+            }
 
             if (categoryChoice == 0) {
                 System.out.println("프로그램을 종료합니다.");
@@ -61,6 +70,7 @@ public class Kiosk {
                 displayMenuItems(menus.get(categoryChoice-1)); // 입력 받은 카테고리 출력!
             } else {
                 System.out.println("올바른 번호를 입력하세요");
+                // 해당 else문이 필요한 이유 : try-catch문에서 숫자가 아닌 입력을 걸러내더라도, 범위 밖의 숫자(예:5)는 걸러낼 수 없음. else문으로 걸러줘야함
             }
         }
         scanner.close();
@@ -83,7 +93,15 @@ public class Kiosk {
             System.out.println("0. 뒤로가기");
 
             // 서브 메뉴 입력받기
-            int subMenuChoice = scanner.nextInt();
+            int subMenuChoice = -1;
+            try {
+                subMenuChoice = scanner.nextInt();
+            } catch (Exception e) {
+                System.out.println("숫자를 입력하세요");
+                scanner.nextLine(); // 개행 >> 잘못된 입력 제거
+                continue; // 다시 입력받도록 반복문 처음으로 이동
+            }
+
             if (subMenuChoice == 0) {
                 subMenu = false; // 뒤로가기 선택시(0입력) 서브메뉴 종료되도록
             } else if (subMenuChoice > 0 && subMenuChoice <= items.size()) {
