@@ -3,10 +3,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    private List<MenuItem> menuItems;
+    private List<MenuItem> menuItems; // 리스트 선언
 
-    public Kiosk() {
-        menuItems = new ArrayList<>();
+    public Kiosk() {  // Kiosk() 생성자
+        menuItems = new ArrayList<>(); // 리스트 초기화 (초기화 하기 전에는 null, 초기화 한 후에는 [] 빈 리스트)
+        // 리스트에 요소 추가 (새로운 메뉴 추가시 여기 Kiosk()만 수정해주면 됨)
         menuItems.add(new MenuItem("ShackBurger", 6.9, "토마토, 양상추, 쉑소스가 토핑된 치즈버거"));
         menuItems.add(new MenuItem("SmokeShack", 8.9, "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"));
         menuItems.add(new MenuItem("Cheeseburger", 6.9, "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"));
